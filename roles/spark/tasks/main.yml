@@ -1,3 +1,8 @@
+- name: check for spark
+  stat:
+    path: '{{spark.folder_spark}}/spark'
+  register: spark_status
+
 - name: download spark
   unarchive:
     src: '{{ spark.url }}'
@@ -6,14 +11,16 @@
     mode: 0770
     owner: '{{ spark.user }}'
     group: '{{ spark.group }}'
-    
+  when: spark_status.stat.exists == False
+
 - name: rename spark
   command: mv '{{spark.folder_spark}}/{{spark.file}}' '{{spark.folder_spark}}/spark'
-  
+  when: spark_status.stat.exists == False
+
 - name: register spark variables
-  lineinfile: 
-    dest: '/home/{{ spark.user }}/.bashrc' 
-    line: '{{item}}' 
+  lineinfile:
+    dest: '/home/{{ spark.user }}/.bashrc'
+    line: '{{item}}'
     insertafter: 'EOF'
     state: present
   with_items:
@@ -21,6 +28,4 @@
     - 'export PYSPARK_DRIVER_PYTHON=python3'
     - 'export SPARK_HOME={{spark.folder_spark}}/spark'
     - 'export PATH=$SPARK_HOME/bin:$PATH'
-
-
-    
+  when: spark_status.stat.exists == False
