@@ -8,21 +8,19 @@ Ansible Script to install Jupyter and Spark on a EC2 Instance
 
 ## Spark
 
-/opts/spark/sbin/start-master.sh -h <server_ip>
-/opts/spark/sbin/start-slave.sh -h <master_url>
+/opts/spark/sbin/start-master.sh -h <server_ip> <br />
+/opts/spark/sbin/start-slave.sh -h <master_url> <br />
 
 ## Jupyter
 
 jupyter notebook --config=/home/ubuntu/.jupyter/jupyter_notebook_config.py
 
 
-Jupyter Notebook
-```
+```python
 import findspark
 findspark.init()
 import pyspark
 import random
-
 
 sc = pyspark.SparkContext(appName="test", master="<master_url>")
 ```
