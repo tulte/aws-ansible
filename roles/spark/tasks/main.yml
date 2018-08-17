@@ -1,0 +1,26 @@
+- name: download spark
+  unarchive:
+    src: '{{ spark.url }}'
+    dest: '{{ spark.folder_spark }}'
+    remote_src: yes
+    mode: 0770
+    owner: '{{ spark.user }}'
+    group: '{{ spark.group }}'
+    
+- name: rename spark
+  command: mv '{{spark.folder_spark}}/{{spark.file}}' '{{spark.folder_spark}}/spark'
+  
+- name: register spark variables
+  lineinfile: 
+    dest: '/home/{{ spark.user }}/.bashrc' 
+    line: '{{item}}' 
+    insertafter: 'EOF'
+    state: present
+  with_items:
+    - 'export PYSPARK_PYTHON=python3'
+    - 'export PYSPARK_DRIVER_PYTHON=python3'
+    - 'export SPARK_HOME={{spark.folder_spark}}/spark'
+    - 'export PATH=$SPARK_HOME/bin:$PATH'
+
+
+    

@@ -1,0 +1,6 @@
+- include_tasks: python3.yml
+  when: python.version3 == true
+
+- include_tasks: python2.yml
+  when: python.version2 == true
+    

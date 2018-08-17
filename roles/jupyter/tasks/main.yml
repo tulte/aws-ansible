@@ -1,0 +1,49 @@
+- name: install jupyter
+  pip:
+    name: 'jupyter'
+
+- name: copy certs key
+  template:
+    src: certs/jupyter.key
+    dest: '/home/{{ jupyter_user }}/certs/'
+    owner: '{{ jupyter_user }}'
+    group: '{{ jupyter_user }}'
+
+- name: copy certs pem
+  template:
+    src: certs/jupyter.pem
+    dest: '/home/{{ jupyter_user }}/certs/'
+    owner: '{{ jupyter_user }}'
+    group: '{{ jupyter_user }}'
+
+- name: create notebooks directory
+  file:
+    path: '/home/{{ jupyter_user }}/notebooks'
+    state: directory
+    owner: '{{ jupyter_user }}'
+    group: '{{ jupyter_user }}'
+
+- name: copy config
+  template:
+    src: config/jupyter_notebook_config.py
+    dest: '/home/{{ jupyter_user }}/.jupyter/'
+    owner: '{{ jupyter_user }}'
+    group: '{{ jupyter_user }}'
+  notify:
+    - reload systemctl
+
+#- name: copy service
+#  template:
+#    src: config/jupyter.service
+#    dest: /lib/systemd/system/jupyter.service
+#    mode: 644
+#    owner: '{{ jupyter_user }}'
+#    group: '{{ jupyter_user }}'
+#  notify:
+#    - reload systemctl
+
+#- name: start service
+#  service:
+#    name: jupyter.service
+#    state: started
+#    enabled: yes

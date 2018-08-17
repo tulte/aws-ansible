@@ -1,0 +1,20 @@
+- name: install python pip
+  apt:
+    update_cache: yes
+    pkg: python3-pip
+    state: present
+
+- name: install python modules apt
+  action: apt
+          pkg={{ item }}
+          state=present
+          force=yes
+  with_items:
+    - python-mysqldb
+    - python-passlib
+
+- name: install python modules pip
+  pip:
+    name: '{{ item }}'
+  with_items: "{{ python.pip_modules }}"
+

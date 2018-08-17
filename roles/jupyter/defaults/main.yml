@@ -1,0 +1,6 @@
+---
+jupyter_user: ubuntu
+jupyter_password: 'sha1:d33c0c9429ef:62cd1d3692e60cf5b4eb37ca46cac05daae1f806'
+jupyter_port: 48888
+jupyter_spark_folder: '/opt/spark'
+juyper_java_home: '/usr/lib/jvm/java-8-oracle'

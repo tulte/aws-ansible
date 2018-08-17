@@ -1,0 +1,21 @@
+- hosts: all
+  become: true
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    python:
+      version3: true
+      pip_modules:
+        - pandas
+        - numpy
+        - scikit-learn
+        - requests
+        - findspark
+        - airflow
+        - beautifulsoup4
+  debugger: on_failed
+  roles:
+    #- java-oracle
+    #- python
+    #- spark
+    - jupyter
