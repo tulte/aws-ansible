@@ -1,0 +1,26 @@
+ec2:
+  project_name: test
+  access_key: 
+  secret_key: 
+  region: eu-central-1
+  instance_type: t2.nano
+  ami: ami-c7e0c82c
+  vpc_subnet_id: subnet-8b6039e0
+  ssh_key: tobias.mueller
+  server_count: 1
+  server_tag: server
+  hostpath: ./hosts
+  security_rules:
+    - proto: tcp
+      from_port: 22
+      to_port: 22
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 443
+      to_port: 443
+      cidr_ip: 0.0.0.0/0
+      
